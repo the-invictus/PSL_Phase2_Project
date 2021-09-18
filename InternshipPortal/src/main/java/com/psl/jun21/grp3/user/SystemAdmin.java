@@ -1,10 +1,17 @@
 package com.psl.jun21.grp3.user;
 
-/*
- * TODO 
- * Author Rohan Sachin Suchitra
- * */
+import javax.persistence.Entity;
 
-public class SystemAdmin extends User{
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+/**
+ * @author Suchitra Rohan Sachin
+ *
+ */
+@Entity
+@ToString
+public class SystemAdmin extends User {
+	
 }
