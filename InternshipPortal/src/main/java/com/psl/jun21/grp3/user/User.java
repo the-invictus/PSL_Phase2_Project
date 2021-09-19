@@ -27,7 +27,6 @@ import lombok.ToString;
  * Author Rohan Sachin Suchitra
  * */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -38,15 +37,18 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@NotNull
 	@Email
 	private String email;
 
-	@Embedded
+	/* Replaced by String companyName in Company.java
+	 * 			and Name name in Applicant.java
+	 * @Embedded
 	private Name name;
-
+	*/
+	
 	@NotNull
 	@Column(updatable = false)
 	private UserRole role;
@@ -57,4 +59,15 @@ public class User {
 	@NotNull
 	@Size(min = 10, max = 10, message = "Contact no should be 10 digits")
 	private int contactNo;
+
+	public User(@NotNull @Email String email, Name name, @NotNull UserRole role, String password,
+			@NotNull @Size(min = 10, max = 10, message = "Contact no should be 10 digits") int contactNo) {
+		super();
+		this.email = email;
+		// this.name = name;
+		this.role = role;
+		this.password = password;
+		this.contactNo = contactNo;
+	}
+	
 }
