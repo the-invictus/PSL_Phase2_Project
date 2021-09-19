@@ -11,13 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserRegistrationDto {
+public class ApplicantRegistrationDto {
 
 	private String email;
 	private String firstName;
 	private String middleName;
 	private String surname;
-	private String role;
 	private String password;
 	private String contactNo;
 

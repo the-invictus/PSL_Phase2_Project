@@ -11,7 +11,7 @@
 
 </head>
 <body>
-	<!-- create navigation bar ( header) --> 
+	<!-- create navigation bar ( header) -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#registration"
@@ -39,7 +39,8 @@
 
 				<h1>Registration</h1>
 
-				<form th:action="@{/registration}" method="post" th:object="${user}">
+				<form th:action="@{/registration}" method="post"
+					th:object="${applicant}">
 					<div class="form-group">
 						<label class="control-label" for="firstName"> First Name </label>
 						<input id="firstName" class="form-control" th:field="*{firstName}"

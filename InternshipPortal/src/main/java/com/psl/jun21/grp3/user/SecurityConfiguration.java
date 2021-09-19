@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private UserService userService;
+	private ApplicantService userService;
 	
 	@Bean
     public BCryptPasswordEncoder passwordEncoder() {

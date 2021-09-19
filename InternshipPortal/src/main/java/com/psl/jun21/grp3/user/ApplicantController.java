@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
+public class ApplicantController {
 
 	@Autowired
-	private UserService userService;
+	private ApplicantService applicantService;
 
-	@ModelAttribute("user")
-	public UserRegistrationDto userRegistrationDto() {
-		return new UserRegistrationDto();
+	@ModelAttribute("applicant")
+	public ApplicantRegistrationDto userRegistrationDto() {
+		return new ApplicantRegistrationDto();
 	}
 
 	@GetMapping("/login")
@@ -26,12 +26,15 @@ public class UserController {
 	public String showRegistrationForm() {
 		return "registration";
 	}
+	
+	@GetMapping("/")
+	public String home() {
+		return "index";
+	}
 
 	@PostMapping("/registration")
-	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-		// TODO
-		// System.out.println(registrationDto.toString());
-		userService.save(registrationDto);
+	public String registerUserAccount(@ModelAttribute("applicant") ApplicantRegistrationDto registrationDto) {
+		applicantService.save(registrationDto);
 		return "redirect:/registration?success";
 	}
 

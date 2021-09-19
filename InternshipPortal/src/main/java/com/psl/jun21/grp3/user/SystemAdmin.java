@@ -15,9 +15,4 @@ import lombok.ToString;
 @ToString
 public class SystemAdmin extends User {
 
-	public SystemAdmin(@NotNull @Email String email, Name name, @NotNull UserRole role, String password,
-			@NotNull @Size(min = 10, max = 10, message = "Contact no should be 10 digits") int contactNo) {
-		super(email, name, role, password, contactNo);
-	}
-	
 }

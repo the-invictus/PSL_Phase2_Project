@@ -13,24 +13,34 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.psl.jun21.grp3.applicant.Applicant;
+
 @Service
-public class UserServiceImpl implements UserService {
+public class ApplicantServiceImpl implements ApplicantService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	@Autowired
-	private UserRepository userRepository;
+	private ApplicantRepository applicantRepository;
 
 	@Override
-	public User save(UserRegistrationDto userRegistrationDto) {
-		// TODO
+	public Applicant save(ApplicantRegistrationDto applicantDto) {
+		Name name = new Name(applicantDto.getFirstName(), applicantDto.getMiddleName(),
+				applicantDto.getSurname());
+
+		String password = passwordEncoder.encode(applicantDto.getPassword());
+
+		Applicant newApplicant = new Applicant(applicantDto.getEmail(), password,
+				Long.parseLong(applicantDto.getContactNo()), name);
+
+		applicantRepository.save(newApplicant);
 		return null;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(username);
+		Applicant user = applicantRepository.findByEmail(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username and password");

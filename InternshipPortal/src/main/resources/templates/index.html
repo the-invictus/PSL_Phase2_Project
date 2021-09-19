@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registration</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+
+</head>
+<body>
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#registration"
+				th:href="@{/registration}">Registration and Login Module</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<br>
+	<br>
+
+	<div class="container">
+		<h1>Registration and Login with Spring Boot, Spring Security,
+			Thymeleaf, Hibernate and MySQL</h1>
+		Welcome <span sec:authentication="principal.email"> User</span>
+	</div>
+
+</body>
+</html>
