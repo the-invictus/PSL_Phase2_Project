@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>All Active Profiles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+<body>
+<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+			<div class="container">
+		<h1>Internship Portal</h1>
+		Welcome <span sec:authentication="principal.username"> User</span>
+	</div>
+	<div class="container my-2">
+		<div class="card">
+			<div class="card-body">
+				<div th:switch="${internshipProfiles}" class="container my-5">
+					
+					<div class="col-md-10">
+						<h2 th:case="null">No record found !!</h2>
+						<div th:case="*">
+							<table class="table table-striped table-responsive-md">
+								<thead>
+									<tr>
+										<th>title</th>
+										<th>Domain</th>
+										<th>Description</th>
+										<th>Duration</th>
+										<th> Company Name</th>
+										<th> Company Domain </th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="internshipProfile : ${internshipProfiles}">
+										<td th:text="${internshipProfile.title}"></td>
+										<td th:text="${internshipProfile.domain}"></td>
+										<td th:text="${internshipProfile.description}"></td>
+										<td th:text="${internshipProfile.duration}"></td>
+										<td th:text="${internshipProfile.company.companyName}"></td>
+										<td th:text="${internshipProfile.company.domain}"></td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
