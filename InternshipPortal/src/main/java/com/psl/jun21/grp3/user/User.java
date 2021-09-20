@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -23,15 +25,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-/*
- * @MappedSuperclass
- * 
- * @JsonSubTypes({ @Type(value = Company.class, name = "company"), @Type(value =
- * Applicant.class, name = "applicant"),
- * 
- * @Type(value = SystemAdmin.class, name = "sys_admin") })
- */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "email" }))
 public class User {
 
 	@Id
@@ -41,13 +36,6 @@ public class User {
 	@NotNull
 	@Email
 	protected String email;
-
-	/*
-	 * Replaced by String companyName in Company.java and Name name in
-	 * Applicant.java
-	 * 
-	 * @Embedded private Name name;
-	 */
 
 	@NotNull
 	@Column(updatable = false)
@@ -62,7 +50,5 @@ public class User {
 		this.role = role;
 		this.password = password;
 	}
-	
-	
 
 }

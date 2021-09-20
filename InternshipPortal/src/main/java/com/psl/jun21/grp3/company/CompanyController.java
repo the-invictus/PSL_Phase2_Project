@@ -1,44 +1,35 @@
-package com.psl.jun21.grp3.user;
-
+package com.psl.jun21.grp3.company;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.psl.jun21.grp3.auth.CompanyRegistrationDto;
 
 @Controller
+@RequestMapping("/company")
 public class CompanyController {
-	
+
 	@Autowired
 	private CompanyService companyService;
-	
+
 	@ModelAttribute("company")
-	public CompanyRegistrationDto companyRegistrationDto() {
+	public CompanyRegistrationDto userRegistrationDto() {
 		return new CompanyRegistrationDto();
 	}
-	
-	@GetMapping("/login")
-	public String loginPage() {
-		return "login";
-		
-	}
-	
-	@GetMapping("/registration")
+
+	@GetMapping(path = { "/registration" })
 	public String showRegistrationForm() {
-		return "registration";
+		return "company-registration";
 	}
-	
-	@GetMapping("/")
-	public String home() {
-		return "index";
-	}
-	
-	@PostMapping("/registration")
-	public String registerCompanyAccount(@ModelAttribute("company") CompanyRegistrationDto registrationDto) {
+
+	@PostMapping(path = { "/registration" })
+	public String registerUserAccount(@ModelAttribute("company") CompanyRegistrationDto registrationDto) {
 		companyService.save(registrationDto);
-		return "redirect:/registration?success";
+		return "redirect:/company/registration?success";
 	}
-	
 
 }

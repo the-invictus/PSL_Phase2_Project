@@ -1,4 +1,4 @@
-package com.psl.jun21.grp3.user;
+package com.psl.jun21.grp3.applicant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.psl.jun21.grp3.applicant.Applicant;
+import com.psl.jun21.grp3.auth.ApplicantRegistrationDto;
+import com.psl.jun21.grp3.user.Name;
+import com.psl.jun21.grp3.user.User;
+import com.psl.jun21.grp3.user.UserRepository;
+import com.psl.jun21.grp3.user.UserRole;
 
 @Service
 public class ApplicantService {
@@ -31,9 +35,9 @@ public class ApplicantService {
 
 		Name name = new Name(applicantDto.getFirstName(), applicantDto.getMiddleName(), applicantDto.getSurname());
 		Applicant newApplicant = new Applicant(name, Long.parseLong(applicantDto.getContactNo()), user.getId());
-		applicantRepository.save(newApplicant);
+		newApplicant = applicantRepository.save(newApplicant);
 		log.info("Applicant created : {}", name.toString());
 
-		return null;
+		return newApplicant;
 	}
 }
