@@ -1,6 +1,4 @@
-package com.psl.jun21.grp3.user;
-
-import javax.persistence.Embeddable;
+package com.psl.jun21.grp3.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,16 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Embeddable
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Name {
-
-	private String firstName;
-	private String middleName;
-	private String surname;
-
+public class CompanyRegistrationDto {
+	private String email;
+	private String companyName;
+	private String password;
+	private String contactNo;
+	private String domain;
 }

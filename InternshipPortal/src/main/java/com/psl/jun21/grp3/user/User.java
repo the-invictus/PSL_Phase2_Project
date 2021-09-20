@@ -1,22 +1,17 @@
 package com.psl.jun21.grp3.user;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.psl.jun21.grp3.applicant.Applicant;
-import com.psl.jun21.grp3.company.Company;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,34 +22,33 @@ import lombok.ToString;
  * Author Rohan Sachin Suchitra
  * */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@MappedSuperclass
-@JsonSubTypes({ @Type(value = Company.class, name = "company"), @Type(value = Applicant.class, name = "applicant"),
-		@Type(value = SystemAdmin.class, name = "sys_admin") })
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "email" }))
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	protected long id;
 
 	@NotNull
 	@Email
-	private String email;
-
-	@Embedded
-	private Name name;
+	protected String email;
 
 	@NotNull
 	@Column(updatable = false)
-	private UserRole role;
+	protected UserRole role;
 
 	@JsonIgnore
-	private String password;
+	protected String password;
 
-	@NotNull
-	@Size(min = 10, max = 10, message = "Contact no should be 10 digits")
-	private int contactNo;
+	public User(@NotNull @Email String email, @NotNull UserRole role, String password) {
+		super();
+		this.email = email;
+		this.role = role;
+		this.password = password;
+	}
+
 }
