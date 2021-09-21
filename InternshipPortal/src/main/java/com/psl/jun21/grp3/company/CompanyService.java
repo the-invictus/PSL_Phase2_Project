@@ -39,4 +39,8 @@ public class CompanyService {
 
 		return newCompany;
 	}
+	public Company getCompanyDetails(Long id)
+	{
+		return companyRepository.findByUserId(id);
+	}
 }
