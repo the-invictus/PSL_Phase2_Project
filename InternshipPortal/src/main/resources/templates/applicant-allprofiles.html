@@ -26,7 +26,11 @@
 		<div class="card">
 			<div class="card-body">
 				<div th:switch="${internshipProfiles}" class="container my-5">
-					
+					<p class="my-5">
+						<a href="/internshipProfile/edit" class="btn btn-primary"> <i
+							class="fas fa-user-plus ml-2"> Add Profiles </i>
+						</a>
+					</p>
 					<div class="col-md-10">
 						<h2 th:case="null">No record found !!</h2>
 						<div th:case="*">
@@ -37,8 +41,6 @@
 										<th>Domain</th>
 										<th>Description</th>
 										<th>Duration</th>
-										<th> Company Name</th>
-										<th> Company Domain </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -47,9 +49,15 @@
 										<td th:text="${internshipProfile.domain}"></td>
 										<td th:text="${internshipProfile.description}"></td>
 										<td th:text="${internshipProfile.duration}"></td>
-										<td th:text="${internshipProfile.company.companyName}"></td>
-										<td th:text="${internshipProfile.company.domain}"></td>
-										
+										<td><a
+											th:href="@{/internshipProfile/edit/{id}(id=${internshipProfile.id})}"
+											class="btn btn-primary"> <i class="fas fa-user-edit ml-2"></i>
+										</a></td>
+										<td><a
+											th:href="@{/internshipProfile/delete/{id}(id=${internshipProfile.id})}"
+											class="btn btn-primary"> <i
+												class="fas fa-user-times ml-2"></i>
+										</a></td>
 									</tr>
 								</tbody>
 							</table>
