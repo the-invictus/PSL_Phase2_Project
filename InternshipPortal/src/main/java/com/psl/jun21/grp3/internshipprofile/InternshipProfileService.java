@@ -19,29 +19,29 @@ public class InternshipProfileService {
 	@Autowired
 	InternshipProfileRepository repository;
 
-	public List<InternshipProfileAppli> getAllInternshipProfiles() {
-		List<InternshipProfileAppli> result = (List<InternshipProfileAppli>) repository.findAll();
+	public List<InternshipProfile> getAllInternshipProfiles() {
+		List<InternshipProfile> result = (List<InternshipProfile>) repository.findAll();
 
 		if (result.size() > 0) {
 			return result;
 		} else {
-			return new ArrayList<InternshipProfileAppli>();
+			return new ArrayList<InternshipProfile>();
 		}
 	}
 	
-	public List<InternshipProfileAppli> getCompanyInternshipProfiles(Company c) {
-		List<InternshipProfileAppli> result = (List<InternshipProfileAppli>) repository.findByCompany(c);
+	public List<InternshipProfile> getCompanyInternshipProfiles(Company c) {
+		List<InternshipProfile> result = (List<InternshipProfile>) repository.findByCompany(c);
 
 		if (result.size() > 0) {
 			return result;
 		} else {
-			return new ArrayList<InternshipProfileAppli>();
+			return new ArrayList<InternshipProfile>();
 		}
 	}
 	
 
-	public InternshipProfileAppli getInternshipProfileById(Long id) throws RecordNotFoundException {
-		Optional<InternshipProfileAppli> internshipProfile = repository.findById(id);
+	public InternshipProfile getInternshipProfileById(Long id) throws RecordNotFoundException {
+		Optional<InternshipProfile> internshipProfile = repository.findById(id);
 
 		if (internshipProfile.isPresent()) {
 			return internshipProfile.get();
@@ -50,16 +50,16 @@ public class InternshipProfileService {
 		}
 	}
 
-	public InternshipProfileAppli createOrUpdateInternshipProfile(InternshipProfileAppli entity) {
+	public InternshipProfile createOrUpdateInternshipProfile(InternshipProfile entity) {
 		if (entity.getId() == null) {
 			entity = repository.save(entity);
 
 			return entity;
 		} else {
-			Optional<InternshipProfileAppli> internshipProfile = repository.findById(entity.getId());
+			Optional<InternshipProfile> internshipProfile = repository.findById(entity.getId());
 
 			if (internshipProfile.isPresent()) {
-				InternshipProfileAppli newEntity = internshipProfile.get();
+				InternshipProfile newEntity = internshipProfile.get();
 
 				newEntity.setTitle(entity.getTitle());
 				newEntity.setDuration(entity.getDuration());
@@ -77,7 +77,7 @@ public class InternshipProfileService {
 	}
 
 	public void deleteInternshipProfileById(Long id) throws RecordNotFoundException {
-		Optional<InternshipProfileAppli> internshipProfile = repository.findById(id);
+		Optional<InternshipProfile> internshipProfile = repository.findById(id);
 
 		if (internshipProfile.isPresent()) {
 			repository.deleteById(id);

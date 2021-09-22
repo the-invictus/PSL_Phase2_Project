@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.psl.jun21.grp3.auth.ApplicantRegistrationDto;
-
 @Controller
 @RequestMapping("/applicant")
 public class ApplicantController {
@@ -23,7 +21,7 @@ public class ApplicantController {
 
 	@GetMapping(path = { "/registration" })
 	public String showRegistrationForm() {
-		return "registration";
+		return "applicant-registration";
 	}
 
 	@PostMapping(path = { "/registration" })

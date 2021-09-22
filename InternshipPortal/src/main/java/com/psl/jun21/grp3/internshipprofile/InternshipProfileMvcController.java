@@ -38,35 +38,35 @@ public class InternshipProfileMvcController {
 	@GetMapping
 	public String getAllInternshipProfile(Model model) {
 		/*
-		List<InternshipProfileAppli> list = service.getAllInternshipProfiles();
-		model.addAttribute("internshipProfiles", list);
-		return "list-internshipProfiles";
-		
-		*/
+		 * List<InternshipProfileAppli> list = service.getAllInternshipProfiles();
+		 * model.addAttribute("internshipProfiles", list); return
+		 * "list-internshipProfiles";
+		 * 
+		 */
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username="";
+		String username = "";
 		if (principal instanceof UserDetails) {
-			  username = ((UserDetails)principal).getUsername();
-			} else {
-			  username = principal.toString();
-			}
-		
-		User u=userRepo.findByEmail(username);
-		Company c=comser.getCompanyDetails(u.getId());
-		List<InternshipProfileAppli> list = service.getCompanyInternshipProfiles(c);
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+
+		User u = userRepo.findByEmail(username);
+		Company c = comser.getCompanyDetails(u.getId());
+		List<InternshipProfile> list = service.getCompanyInternshipProfiles(c);
 		model.addAttribute("internshipProfiles", list);
 		return "list-internshipProfiles";
-		
+
 	}
 
 	@RequestMapping(path = { "/edit", "/edit/{id}" })
 	public String editInternshipProfileById(Model model, @PathVariable("id") Optional<Long> id)
 			throws RecordNotFoundException {
 		if (id.isPresent()) {
-			InternshipProfileAppli entity = service.getInternshipProfileById(id.get());
+			InternshipProfile entity = service.getInternshipProfileById(id.get());
 			model.addAttribute("internshipProfile", entity);
 		} else {
-			model.addAttribute("internshipProfile", new InternshipProfileAppli());
+			model.addAttribute("internshipProfile", new InternshipProfile());
 		}
 		return "create-edit-internshipProfile";
 	}
@@ -84,16 +84,16 @@ public class InternshipProfileMvcController {
 	}
 
 	@PostMapping()
-	public String createOrUpdateInternshipProfile(InternshipProfileAppli internshipProfile) {
+	public String createOrUpdateInternshipProfile(InternshipProfile internshipProfile) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username="";
+		String username = "";
 		if (principal instanceof UserDetails) {
-			  username = ((UserDetails)principal).getUsername();
-			} else {
-			  username = principal.toString();
-			}
-		User u=userRepo.findByEmail(username);
-		Company c=comser.getCompanyDetails(u.getId());
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		User u = userRepo.findByEmail(username);
+		Company c = comser.getCompanyDetails(u.getId());
 		internshipProfile.setCompany(c);
 		service.createOrUpdateInternshipProfile(internshipProfile);
 		return "redirect:/internshipProfile";

@@ -12,7 +12,7 @@ import com.psl.jun21.grp3.company.Company;
  *
  */
 @Repository
-public interface InternshipProfileRepository extends CrudRepository<InternshipProfileAppli, Long> {
-	List<InternshipProfileAppli> findByCompany(Company c);
+public interface InternshipProfileRepository extends CrudRepository<InternshipProfile, Long> {
+	List<InternshipProfile> findByCompany(Company c);
 
 }

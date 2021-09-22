@@ -1,12 +1,20 @@
 package com.psl.jun21.grp3.company;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import com.psl.jun21.grp3.internshipprofile.InternshipProfile;
+import com.psl.jun21.grp3.user.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,17 +43,18 @@ public class Company {
 	@Max(value = 9999999999L)
 	protected long contactNo;
 
-	protected long userId;
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	protected User user;
 
-	public Company(String companyName, String domain, @NotNull @Min(1000000000) @Max(9999999999L) long contactNo,
-			long userId) {
+	@OneToMany(mappedBy = "company")
+	List<InternshipProfile> internshipProfiles;
+
+	public Company(String companyName, String domain, @NotNull @Min(1000000000) @Max(9999999999L) long contactNo) {
 		super();
 		this.companyName = companyName;
 		this.domain = domain;
 		this.contactNo = contactNo;
-		this.userId = userId;
 	}
-	
-	
 
 }

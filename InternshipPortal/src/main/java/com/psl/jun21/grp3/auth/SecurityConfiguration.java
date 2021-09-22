@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/applicant/registration", "/company/registration").permitAll()
+		http.authorizeRequests().antMatchers("/applicant/registration", "/company/registration", "/").permitAll()
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").successHandler(authHandler).permitAll().and().logout()
 				.invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")

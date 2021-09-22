@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.psl.jun21.grp3.auth.ApplicantRegistrationDto;
 import com.psl.jun21.grp3.user.Name;
 import com.psl.jun21.grp3.user.User;
 import com.psl.jun21.grp3.user.UserRepository;
@@ -29,15 +28,28 @@ public class ApplicantService {
 	public Applicant save(ApplicantRegistrationDto applicantDto) {
 
 		String password = passwordEncoder.encode(applicantDto.getPassword());
-		User user = new User(applicantDto.getEmail(), UserRole.APPLICANT, password);
-		user = userRepository.save(user);
-		log.info("User created : {}", user.getEmail());
-
+//		User user = new User(applicantDto.getEmail(), UserRole.APPLICANT, password);
+//		user = userRepository.save(user);
+//		log.info("User created : {}", user.getEmail());
+//
 		Name name = new Name(applicantDto.getFirstName(), applicantDto.getMiddleName(), applicantDto.getSurname());
-		Applicant newApplicant = new Applicant(name, Long.parseLong(applicantDto.getContactNo()), user.getId());
-		newApplicant = applicantRepository.save(newApplicant);
-		log.info("Applicant created : {}", name.toString());
+//		Applicant newApplicant = new Applicant(name, Long.parseLong(applicantDto.getContactNo()), user.getId());
+//		newApplicant = applicantRepository.save(newApplicant);
+//		
+//		
+		User user = new User();
+		user.setEmail(applicantDto.getEmail());
+		user.setPassword(password);
+		user.setRole(UserRole.APPLICANT);
+		Applicant applicant = new Applicant();
+		applicant.setContactNo(Long.parseLong(applicantDto.getContactNo()));
+		applicant.setDegree(applicantDto.getDegree());
+		applicant.setName(name);
+		applicant.setSpecialization(applicantDto.getSpecialization());
+		user.setApplicant(applicant);
+		user = userRepository.save(user);
+		log.info("Applicant created : {} {}", name.toString(), user.getEmail());
 
-		return newApplicant;
+		return user.getApplicant();
 	}
 }

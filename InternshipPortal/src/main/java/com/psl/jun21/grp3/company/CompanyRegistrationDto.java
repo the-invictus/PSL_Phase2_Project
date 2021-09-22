@@ -1,4 +1,4 @@
-package com.psl.jun21.grp3.auth;
+package com.psl.jun21.grp3.company;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +11,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ApplicantRegistrationDto {
-
+public class CompanyRegistrationDto {
 	private String email;
-	private String firstName;
-	private String middleName;
-	private String surname;
+	private String companyName;
 	private String password;
 	private String contactNo;
-
+	private String domain;
 }
