@@ -1,4 +1,4 @@
-package com.psl.jun21.grp3.user;
+package com.psl.jun21.grp3.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

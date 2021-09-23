@@ -10,37 +10,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.psl.jun21.grp3.applicant.Applicant;
-
 @Service
-public class ApplicantServiceImpl implements ApplicantService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-
-	@Autowired
-	private ApplicantRepository applicantRepository;
+	private UserRepository userRepository;
 
 	@Override
-	public Applicant save(ApplicantRegistrationDto applicantDto) {
-		Name name = new Name(applicantDto.getFirstName(), applicantDto.getMiddleName(),
-				applicantDto.getSurname());
-
-		String password = passwordEncoder.encode(applicantDto.getPassword());
-
-		Applicant newApplicant = new Applicant(applicantDto.getEmail(), password,
-				Long.parseLong(applicantDto.getContactNo()), name);
-
-		applicantRepository.save(newApplicant);
+	public User save(User user) {
+		userRepository.save(user);
 		return null;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Applicant user = applicantRepository.findByEmail(username);
+		User user = userRepository.findByEmail(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username and password");

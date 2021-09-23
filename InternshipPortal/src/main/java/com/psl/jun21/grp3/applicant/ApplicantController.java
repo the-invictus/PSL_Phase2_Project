@@ -1,12 +1,16 @@
-package com.psl.jun21.grp3.user;
+package com.psl.jun21.grp3.applicant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.psl.jun21.grp3.auth.ApplicantRegistrationDto;
 
 @Controller
+@RequestMapping("/applicant")
 public class ApplicantController {
 
 	@Autowired
@@ -17,25 +21,15 @@ public class ApplicantController {
 		return new ApplicantRegistrationDto();
 	}
 
-	@GetMapping("/login")
-	public String loginPage() {
-		return "login";
-	}
-	
-	@GetMapping("/registration")
+	@GetMapping(path = { "/registration" })
 	public String showRegistrationForm() {
 		return "registration";
 	}
-	
-	@GetMapping("/")
-	public String home() {
-		return "index";
-	}
 
-	@PostMapping("/registration")
+	@PostMapping(path = { "/registration" })
 	public String registerUserAccount(@ModelAttribute("applicant") ApplicantRegistrationDto registrationDto) {
 		applicantService.save(registrationDto);
-		return "redirect:/registration?success";
+		return "redirect:/applicant/registration?success";
 	}
 
 }
