@@ -36,7 +36,7 @@ public class InternshipApplication {
 
 	private Date appliedOn;
 
-	private String applicationStatus;
+	private ApplicationStatus applicationStatus;
 
 	@ManyToOne
 	Applicant applicant;

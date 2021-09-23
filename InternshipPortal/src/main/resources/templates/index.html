@@ -13,12 +13,12 @@
 </head>
 
 <body>
-<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-				</ul>
-			</div>
-			<div class="container">
+	<div id="navbar" class="collapse navbar-collapse">
+		<ul class="nav navbar-nav">
+			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</div>
+	<div class="container">
 		<h1>Internship Portal</h1>
 		Welcome <span sec:authentication="principal.username"> User</span>
 	</div>
@@ -26,7 +26,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div th:switch="${internshipProfiles}" class="container my-5">
-					
+
 					<div class="col-md-10">
 						<h2 th:case="null">No record found !!</h2>
 						<div th:case="*">
@@ -37,8 +37,8 @@
 										<th>Domain</th>
 										<th>Description</th>
 										<th>Duration</th>
-										<th> Company Name</th>
-										<th> Company Domain </th>
+										<th>Company Name</th>
+										<th>Company Domain</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -49,7 +49,7 @@
 										<td th:text="${internshipProfile.duration}"></td>
 										<td th:text="${internshipProfile.company.companyName}"></td>
 										<td th:text="${internshipProfile.company.domain}"></td>
-										
+
 									</tr>
 								</tbody>
 							</table>

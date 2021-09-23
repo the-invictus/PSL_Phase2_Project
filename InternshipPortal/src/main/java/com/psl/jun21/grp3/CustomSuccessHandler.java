@@ -29,10 +29,10 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 				redirectUrl = "/internshipProfile";
 				break;
 			} else if (grantedAuthority.getAuthority().equals("APPLICANT")) {
-				redirectUrl = "/internshipApplication";
+				redirectUrl = "/applicant/home";
 				break;
 			}
-			
+
 		}
 		System.out.println("redirectUrl " + redirectUrl);
 		if (redirectUrl == null) {

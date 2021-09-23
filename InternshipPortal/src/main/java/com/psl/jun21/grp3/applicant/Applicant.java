@@ -52,5 +52,5 @@ public class Applicant {
 
 	@OneToMany(mappedBy = "applicant")
 	List<InternshipApplication> internshipApplications;
-	
+
 }

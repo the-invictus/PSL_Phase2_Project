@@ -13,7 +13,6 @@ class ApplicantControllerTest {
 
 	@Test
 	void testShowRegistrationForm() {
-		fail("Not yet implemented");
 	}
 
 	@Test

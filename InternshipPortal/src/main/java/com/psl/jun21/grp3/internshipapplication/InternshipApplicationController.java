@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.psl.jun21.grp3.company.CompanyService;
@@ -20,11 +21,20 @@ public class InternshipApplicationController {
 	@Autowired
 	InternshipProfileService service;
 
+	@Autowired
+	InternshipApplicationService internshipApplicationService;
+
 	@GetMapping
 	public String getAllInternshipProfile(Model model) {
 		List<InternshipProfile> list = service.getAllInternshipProfiles();
 		model.addAttribute("internshipProfiles", list);
 		return "index";
+	}
+
+	@GetMapping("/apply/{profileId}/{applicantId}")
+	public String applyForInternship(@PathVariable long profileId, @PathVariable long applicantId) {
+		internshipApplicationService.apply(profileId, applicantId);
+		return "redirect:/applicant/home?applySuccess";
 	}
 
 }

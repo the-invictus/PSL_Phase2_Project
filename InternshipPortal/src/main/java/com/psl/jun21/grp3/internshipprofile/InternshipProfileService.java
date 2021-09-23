@@ -28,7 +28,7 @@ public class InternshipProfileService {
 			return new ArrayList<InternshipProfile>();
 		}
 	}
-	
+
 	public List<InternshipProfile> getCompanyInternshipProfiles(Company c) {
 		List<InternshipProfile> result = (List<InternshipProfile>) repository.findByCompany(c);
 
@@ -38,7 +38,6 @@ public class InternshipProfileService {
 			return new ArrayList<InternshipProfile>();
 		}
 	}
-	
 
 	public InternshipProfile getInternshipProfileById(Long id) throws RecordNotFoundException {
 		Optional<InternshipProfile> internshipProfile = repository.findById(id);
