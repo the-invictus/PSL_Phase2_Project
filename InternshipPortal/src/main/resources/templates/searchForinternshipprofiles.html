@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Company Profile</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Internship Management System</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/home}">Company profile</a></li>
+					<li class="nav-item"><a class="nav-link"
+					th:href="@{/home2}">List of jobs</a></li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<div class="row">
+			<h1>List of Jobs</h1>
+			<br>
+		</div>
+
+		<br>
+		<form th:action="@{/internships}">
+			<div class="form-group">
+				<input type="text" name="id" placeholder="Enter Company ID" id="id"
+					th:value="${company_id}" /> &nbsp; <input type="submit"
+					value="Search" class="btn btn-primary" />
+			</div>
+		</form>
+		
+		<div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+</body>
+</html>
