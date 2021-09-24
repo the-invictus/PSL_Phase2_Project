@@ -1,8 +1,5 @@
 package com.psl.jun21.grp3.applicant;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +41,7 @@ public class ApplicantService {
 		applicant.setSpecialization(applicantDto.getSpecialization());
 		user.setApplicant(applicant);
 		user = userRepository.save(user);
-
-		log.info("Applicant created : {} {}", name.toString(), user.getEmail());
-
+		log.info("Applicant created Name: {} email:{}", name.toString(), user.getEmail());
 		return user.getApplicant();
 	}
 
@@ -54,11 +49,14 @@ public class ApplicantService {
 		return applicantRepository.findById(id).orElseThrow(RuntimeException::new);
 	}
 
-	public void deleteApplicantById(long id) {
+	public long deleteApplicantById(long id) {
 		applicantRepository.deleteById(id);
+		log.info("Applicant deleted ID: {}", id);
+		return id;
 	}
 
 	public Applicant updateApplicant(Applicant applicant) {
+		log.info("Applicant updated ID: {}", applicant.getId());
 		return applicantRepository.save(applicant);
 	}
 

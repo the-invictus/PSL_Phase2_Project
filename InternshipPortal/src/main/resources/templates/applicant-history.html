@@ -32,8 +32,6 @@
 					</li>
 					<li class="nav-item px-2"><a class="nav-link active"
 						th:href="@{/applicant/profile}">My Profile</a></li>
-					<li class="nav-item px-2"><a class="nav-link active"
-						th:href="@{/applicant/history}">My History</a></li>
 					<li class="nav-item px-2" sec:authorize="isAuthenticated()"><a
 						class="nav-link active" th:href="@{/logout}">Logout</a></li>
 				</ul>
@@ -41,33 +39,28 @@
 		</div>
 	</nav>
 
-	<div class="fs-3 mb-3 text-center">Internship Profiles</div>
-	<div th:if="${param.applySuccess}">
-		<div class="alert alert-info">You've successfully applied for
-			internship!</div>
-	</div>
-
+	<div class="fs-3 mb-3 text-center">Internship Profiles History</div>
 
 	<table class="table table-striped table-bordered">
 		<thead class="table-dark">
 			<tr>
 				<th>Title</th>
-				<th>Domain</th>
 				<th>Description</th>
 				<th>Duration</th>
-				<th>Action</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr th:each="job:${jobs}">
-				<td th:text="${job.title}"></td>
-				<td th:text="${job.domain}"></td>
-				<td th:text="${job.description}"></td>
-				<td th:text="${job.duration}"></td>
-				<td><a
-					th:href="@{/internshipApplication/apply/{profileId}/{applicantId}(profileId=${job.id},applicantId=${applicant.id})}"
-					class="btn btn-primary">Apply</a></td>
+			<tr th:each="profile:${profiles}">
+				<td th:text="${profile[0]}"></td>
+				<td th:text="${profile[1]}"></td>
+				<td th:text="${profile[2]}"></td>
+				<td th:switch="${profile[3]}">
+					<p th:case="'0'">Pending</p>
+					<p th:case="'1'">Approved</p>
+					<p th:case="'2'">Rejected</p>
+				</td>
 			</tr>
 		</tbody>
 	</table>
