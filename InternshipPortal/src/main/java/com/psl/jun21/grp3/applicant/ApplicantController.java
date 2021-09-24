@@ -40,6 +40,10 @@ public class ApplicantController {
 
 	@Autowired
 	private InternshipApplicationService internshipApplicationService;
+	
+	public ApplicantController(ApplicantService applicantService2) {
+		
+	}
 
 	@ModelAttribute("applicant")
 	public ApplicantRegistrationDto userRegistrationDto() {
