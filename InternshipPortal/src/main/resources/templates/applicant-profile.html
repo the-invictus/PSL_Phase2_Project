@@ -14,11 +14,11 @@
 	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 	crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-color: #e3f2fd;">
 	<nav class="navbar navbar-expand-lg navbar-light"
-		style="background-color: #e3f2fd;">
+		style="background-color: #1eb2a6;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Internship Network</a>
+			<a class="navbar-brand" th:href="@{/}">Internship Network</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -27,9 +27,11 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item px-2">Welcome <span
-						sec:authentication="principal.username"></span>
+					<li class="nav-item me-5 mt-1 fs-5">Welcome, <span
+						sec:authentication="principal.username"></span>!
 					</li>
+					<li class="nav-item px-2"><a class="nav-link active"
+						th:href="@{/applicant/home}">Home</a></li>
 					<li class="nav-item px-2"><a class="nav-link active"
 						th:href="@{/applicant/profile}">My Profile</a></li>
 					<li class="nav-item px-2" sec:authorize="isAuthenticated()"><a

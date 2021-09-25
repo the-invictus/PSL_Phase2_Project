@@ -1,7 +1,7 @@
 package com.psl.jun21.grp3.applicant;
 
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,7 +46,7 @@ public class Applicant {
 
 	protected String degree;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	protected User user;
 

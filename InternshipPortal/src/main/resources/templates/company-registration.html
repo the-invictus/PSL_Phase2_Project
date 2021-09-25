@@ -16,9 +16,9 @@
 
 <body style="background-color: #e3f2fd;">
 	<nav class="navbar navbar-expand-lg navbar-light"
-		style="background-color: #e3f2fd;">
+		style="background-color: #1eb2a6;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Internship Network</a>
+			<a class="navbar-brand" th:href="@{/}">Internship Network</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -48,56 +48,60 @@
 	<br>
 	<br>
 	<!-- Create HTML registration form -->
-	<div class="container">
+	<div class="d-flex justify-content-center align-items-center">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
 
-				<!-- success message -->
-				<div th:if="${param.success}">
-					<div class="alert alert-info">
-						You've successfully registered to Internship Portal as a <strong>Company</strong>!
-					</div>
+			<!-- success message -->
+			<div th:if="${param.success}">
+				<div class="alert alert-info">
+					You've successfully registered to Internship Portal as a <strong>Company</strong>!
+				</div>
+			</div>
+
+			<div class="fs-2 mb-4 text-center fw-bold">Company Registration</div>
+
+			<form th:action="@{/company/registration}"
+				class="border border-secondary border-3 p-3 rounded-3" method="post"
+				th:object="${company}">
+				<div class="form-group">
+					<label class="control-label my-1" for="companyName">
+						Company Name </label> <input id="companyName" class="form-control"
+						placeholder="Company name  eg. Global LLC"
+						th:field="*{companyName}" required autofocus="autofocus" />
 				</div>
 
-				<h1>Company Registration</h1>
+				<div class="form-group">
+					<label class="control-label my-1" for="email"> Email </label> <input
+						id="email" class="form-control"
+						placeholder="Email  eg. careers@global-llc.com"
+						th:field="*{email}" required autofocus="autofocus" />
+				</div>
 
-				<form th:action="@{/company/registration}" method="post"
-					th:object="${company}">
-					<div class="form-group">
-						<label class="control-label" for="companyName"> Company
-							Name </label> <input id="companyName" class="form-control"
-							th:field="*{companyName}" required autofocus="autofocus" />
-					</div>
+				<div class="form-group">
+					<label class="control-label my-1" for="password"> Password
+					</label> <input id="password" class="form-control" placeholder="Password"
+						type="password" th:field="*{password}" required
+						autofocus="autofocus" />
+				</div>
 
-					<div class="form-group">
-						<label class="control-label" for="email"> Email </label> <input
-							id="email" class="form-control" th:field="*{email}" required
-							autofocus="autofocus" />
-					</div>
+				<div class="form-group">
+					<label class="control-label my-1" for="contactNo"> Contact
+						No </label> <input id="contactNo" class="form-control"
+						placeholder="Contact No" th:field="*{contactNo}" required
+						autofocus="autofocus" />
+				</div>
 
-					<div class="form-group">
-						<label class="control-label" for="password"> Password </label> <input
-							id="password" class="form-control" type="password"
-							th:field="*{password}" required autofocus="autofocus" />
-					</div>
+				<div class="form-group">
+					<label class="control-label my-1" for="domain"> Domain </label> <input
+						id="domain" class="form-control"
+						placeholder="Domain eg. IT/Healthcare" th:field="*{domain}"
+						required autofocus="autofocus" />
+				</div>
 
-					<div class="form-group">
-						<label class="control-label" for="contactNo"> Contact No </label>
-						<input id="contactNo" class="form-control" th:field="*{contactNo}"
-							required autofocus="autofocus" />
-					</div>
-
-					<div class="form-group">
-						<label class="control-label" for="domain"> Domain </label> <input
-							id="domain" class="form-control" th:field="*{domain}" required
-							autofocus="autofocus" />
-					</div>
-
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Register</button>
-					</div>
-				</form>
-			</div>
+				<div class="form-group text-center mt-3">
+					<button type="submit" class="btn btn-lg btn-success">Register</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>

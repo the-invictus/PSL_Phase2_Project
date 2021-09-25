@@ -1,7 +1,7 @@
 package com.psl.jun21.grp3.internshipprofile;
 
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +42,7 @@ public class InternshipProfile {
 	@ManyToOne(optional = false)
 	Company company;
 
-	@OneToMany(mappedBy = "internshipProfile")
+	@OneToMany(mappedBy = "internshipProfile", cascade = CascadeType.ALL)
 	List<InternshipApplication> internshipApplications;
 
 }

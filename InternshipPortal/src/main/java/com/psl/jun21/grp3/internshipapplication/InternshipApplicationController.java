@@ -3,6 +3,8 @@ package com.psl.jun21.grp3.internshipapplication;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,23 +20,58 @@ import com.psl.jun21.grp3.user.UserRepository;
 @RequestMapping("/internshipApplication")
 public class InternshipApplicationController {
 
-	@Autowired
-	InternshipProfileService service;
+  @Autowired
+  InternshipProfileService service;
 
-	@Autowired
-	InternshipApplicationService internshipApplicationService;
+  @Autowired
+  InternshipApplicationService internshipApplicationService;
 
-	@GetMapping
-	public String getAllInternshipProfile(Model model) {
-		List<InternshipProfile> list = service.getAllInternshipProfiles();
-		model.addAttribute("internshipProfiles", list);
-		return "index";
-	}
+  String getPrincipalUser() {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String username = "";
+    if (principal instanceof UserDetails) {
+      username = ((UserDetails) principal).getUsername();
+    } else {
+      username = principal.toString();
+    }
+    return username;
+  }
 
-	@GetMapping("/apply/{profileId}/{applicantId}")
-	public String applyForInternship(@PathVariable long profileId, @PathVariable long applicantId) {
-		internshipApplicationService.apply(profileId, applicantId);
-		return "redirect:/applicant/home?applySuccess";
-	}
+  @GetMapping
+  public String getAllInternshipProfile(Model model) {
+    List<InternshipProfile> list = service.getAllInternshipProfiles();
+    model.addAttribute("internshipProfiles", list);
+    return "index";
+  }
+
+  @GetMapping("/apply/{profileId}/{applicantId}")
+  public String applyForInternship(@PathVariable long profileId, @PathVariable long applicantId) {
+    internshipApplicationService.apply(profileId, applicantId);
+    return "redirect:/applicant/home?applySuccess";
+  }
+
+  @GetMapping("/accept/{id}")
+  public String acceptApplication(@PathVariable long id) {
+    InternshipApplication application = internshipApplicationService.getApplicationById(id);
+    String companyEmail = application.getInternshipProfile().getCompany().getUser().getEmail();
+    if (companyEmail.equals(getPrincipalUser())) {
+      application.setApplicationStatus(ApplicationStatus.APPROVED);
+      internshipApplicationService.save(application);
+      return String.format("redirect:/internshipProfile/%d/applications", id);
+    }
+    return "error";
+  }
+
+  @GetMapping("/reject/{id}")
+  public String rejectApplication(@PathVariable long id) {
+    InternshipApplication application = internshipApplicationService.getApplicationById(id);
+    String companyEmail = application.getInternshipProfile().getCompany().getUser().getEmail();
+    if (companyEmail.equals(getPrincipalUser())) {
+      application.setApplicationStatus(ApplicationStatus.REJECTED);
+      internshipApplicationService.save(application);
+      return String.format("redirect:/internshipProfile/%d/applications", id);
+    }
+    return "error";
+  }
 
 }
