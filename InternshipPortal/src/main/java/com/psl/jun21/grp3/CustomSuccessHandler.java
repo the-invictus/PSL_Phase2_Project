@@ -31,11 +31,12 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
       System.out.println("role " + grantedAuthority.getAuthority());
       if (grantedAuthority.getAuthority().equals("COMPANY")) {
         redirectUrl = "/company/home";
-        break;
       } else if (grantedAuthority.getAuthority().equals("APPLICANT")) {
         redirectUrl = "/applicant/home";
-        break;
-      }
+      } else if (grantedAuthority.getAuthority().equals("SYSTEM_ADMIN")) {
+          redirectUrl = "/admin";
+          break;
+        }
 
     }
     System.out.println("redirectUrl " + redirectUrl);
