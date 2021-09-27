@@ -2,79 +2,89 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registration</title>
+<title>Login</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
-
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+	crossorigin="anonymous"></script>
 </head>
-<body>
-	<!-- create navigation bar ( header) -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+<body style="background-color: #e3f2fd;">
+	<nav class="navbar navbar-expand-lg navbar-light"
+		style="background-color: #1eb2a6;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#registration"
-				th:href="@{/registration}">Registration and Login Module</a>
+			<a class="navbar-brand" th:href="@{/}">Internship Network</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item px-2"><a class="nav-link active"
+						aria-current="page" href="/">Home</a></li>
+					<li class="nav-item active px-2"><a class="nav-link active"
+						href="/" th:href="@{/login}">Login</a></li>
+					<li class="nav-item dropdown active px-2 me-5"><a
+						class="nav-link dropdown-toggle active" id="navbarDropdown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Register </a>
+						<ul class="dropdown-menu active" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/"
+								th:href="@{/company/registration}">Company</a></li>
+							<li><a class="dropdown-item" href="/"
+								th:href="@{/applicant/registration}">Applicant</a></li>
+						</ul></li>
+				</ul>
+			</div>
 		</div>
 	</nav>
+
 	<br>
 	<br>
-	<!-- HTML login form -->
-	<div class="container">
+
+	<div class="d-flex justify-content-center align-items-center">
+
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="fs-2 mb-4 text-center fw-bold">Login</div>
+			<form th:action="@{/login}"
+				class="border border-secondary border-3 p-3 rounded-3" method="post">
 
-				<h1>User Login Page</h1>
-				<form th:action="@{/login}" method="post">
-
-					<!-- error message -->
-					<div th:if="${param.error}">
-						<div class="alert alert-danger">Invalid username or
-							password.</div>
-					</div>
-
-					<!-- logout message -->
-					<div th:if="${param.logout}">
-						<div class="alert alert-info">You have been logged out.</div>
-					</div>
-
-					<div class="form-group">
-						<label for="username"> Username </label> : <input type="text"
-							class="form-control" id="username" name="username"
-							placeholder="Enter Email ID" autofocus="autofocus">
-					</div>
-
-					<div class="form-group">
-						<label for="password">Password</label>: <input type="password"
-							id="password" name="password" class="form-control"
-							placeholder="Enter Password" />
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6 col-sm-offset-3">
-								<input type="submit" name="login-submit" id="login-submit"
-									class="form-control btn btn-primary" value="Log In" />
-							</div>
-						</div>
-					</div>
-				</form>
-				<div class="form-group">
-					<span>New company? <a href="/"
-						th:href="@{/company/registration}">Register here</a></span>
+				<!-- error message -->
+				<div th:if="${param.error}">
+					<div class="alert alert-danger">Invalid username or password.</div>
 				</div>
-				<div class="form-group">
-					<span>New applicant? <a href="/"
-						th:href="@{/applicant/registration}">Register here</a></span>
+
+				<!-- logout message -->
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">You have been logged out.</div>
 				</div>
-			</div>
+
+				<div class="form-group">
+					<label for="username" class="mb-1"> Username </label> : <input
+						type="text" class="form-control mb-2" id="username"
+						name="username" placeholder="Enter Email ID" autofocus="autofocus">
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="mb-1">Password</label>: <input
+						type="password" id="password" name="password" class="form-control"
+						placeholder="Enter Password" />
+				</div>
+
+				<div class="form-group mt-4 mx-5">
+					<div class="row">
+						<input type="submit" name="login-submit" id="login-submit"
+							class="form-control btn btn-primary" value="Log In" />
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
