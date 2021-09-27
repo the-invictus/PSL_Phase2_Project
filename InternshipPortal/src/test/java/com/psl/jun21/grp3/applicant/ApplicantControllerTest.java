@@ -1,23 +1,30 @@
 package com.psl.jun21.grp3.applicant;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 class ApplicantControllerTest {
 
-	@Test
-	void testUserRegistrationDto() {
-		fail("Not yet implemented");
-	}
+  @MockBean
+  private ApplicantService applicantService;
+  private ApplicantController applicantController;
 
-	@Test
-	void testShowRegistrationForm() {
-	}
+  @MockBean
+  Applicant applicant;
 
-	@Test
-	void testRegisterUserAccount() {
-		fail("Not yet implemented");
-	}
+  @SuppressWarnings("deprecation")
+  @BeforeEach
+  void setup() {
+    MockitoAnnotations.initMocks(this);
+    applicantController = new ApplicantController(applicantService);
+  }
+
+  @Test
+  void test1() {
+    assertThat(applicantController.showRegistrationForm()).isEqualTo("applicant-registration");
+  }
 
 }
