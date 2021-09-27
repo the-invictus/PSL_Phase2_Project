@@ -1,7 +1,8 @@
 package com.psl.jun21.grp3.applicant;
 
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.psl.jun21.grp3.internshipapplication.InternshipApplicationRepository;
-import com.psl.jun21.grp3.internshipapplication.InternshipApplicationService;
+import com.psl.jun21.grp3.company.CompanyController;
 import com.psl.jun21.grp3.internshipprofile.InternshipProfile;
 import com.psl.jun21.grp3.internshipprofile.InternshipProfileRepository;
 import com.psl.jun21.grp3.user.UserRepository;
@@ -26,70 +25,73 @@ import com.psl.jun21.grp3.user.UserRepository;
 @RequestMapping("/applicant")
 public class ApplicantController {
 
-	@Autowired
-	private ApplicantService applicantService;
+  private final Logger log = LoggerFactory.getLogger(ApplicantController.class);
 
-	@Autowired
-	private InternshipProfileRepository internshipProfileRepository;
+  @Autowired
+  private ApplicantService applicantService;
 
-	@Autowired
-	private UserRepository userRepository;
+  @Autowired
+  private InternshipProfileRepository internshipProfileRepository;
 
-	@Autowired
-	private ApplicantRepository applicantRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-	@Autowired
-	private InternshipApplicationService internshipApplicationService;
+  public ApplicantController(ApplicantService service) {
 
-	@ModelAttribute("applicant")
-	public ApplicantRegistrationDto userRegistrationDto() {
-		return new ApplicantRegistrationDto();
-	}
+  }
 
-	@GetMapping(path = { "/registration" })
-	public String showRegistrationForm() {
-		return "applicant-registration";
-	}
+  @ModelAttribute("applicant")
+  public ApplicantRegistrationDto userRegistrationDto() {
+    return new ApplicantRegistrationDto();
+  }
 
-	@PostMapping(path = { "/registration" })
-	public String registerUserAccount(@ModelAttribute("applicant") ApplicantRegistrationDto registrationDto) {
-		applicantService.save(registrationDto);
-		return "redirect:/applicant/registration?success";
-	}
+  @GetMapping(path = {"/registration"})
+  public String showRegistrationForm() {
+    return "applicant-registration";
+  }
 
-	@GetMapping("/home")
-	public String homePage(Model model) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Applicant applicant = userRepository.findByEmail(user.getUsername()).getApplicant();
-		model.addAttribute("applicant", applicant);
-		model.addAttribute("jobs", internshipProfileRepository.getApplicableProfilesByApplicantId(applicant.getId()));
-		return "applicant-home";
-	}
+  @PostMapping(path = {"/registration"})
+  public String registerUserAccount(
+      @ModelAttribute("applicant") ApplicantRegistrationDto registrationDto) {
+    applicantService.save(registrationDto);
+    return "redirect:/applicant/registration?success";
+  }
 
-	@GetMapping("/profile")
-	public String profilePage(Model model) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("applicant", userRepository.findByEmail(user.getUsername()).getApplicant());
-		return "applicant-profile";
-	}
-	
-	@GetMapping("/history")
-	public String historyPage(Model model) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Applicant applicant = userRepository.findByEmail(user.getUsername()).getApplicant();
-		List<Object[]> obj = internshipProfileRepository.getProfilesByApplicantId(applicant.getId());
-		System.out.println(obj.get(0).toString());
-		model.addAttribute("profiles", internshipProfileRepository.getProfilesByApplicantId(applicant.getId()));
-		return "applicant-history";
-	}
+  @GetMapping("/home")
+  public String homePage(Model model) {
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Applicant applicant = userRepository.findByEmail(user.getUsername()).getApplicant();
+    log.info("Home Applicant {}", applicant.toString());
+    model.addAttribute("applicant", applicant);
+    List<InternshipProfile> applicableProfiles =
+        internshipProfileRepository.getApplicableProfilesByApplicantId(applicant.getId());
+    model.addAttribute("jobs", applicableProfiles);
+    return "applicant-home";
+  }
 
-	@PutMapping
-	public Applicant updateApplicant(@RequestBody Applicant applicant) {
-		return applicantService.updateApplicant(applicant);
-	}
+  @GetMapping("/profile")
+  public String profilePage(Model model) {
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    model.addAttribute("applicant", userRepository.findByEmail(user.getUsername()).getApplicant());
+    return "applicant-profile";
+  }
 
-	@DeleteMapping("/{id}")
-	public long removeApplicant(@PathVariable long id) {
-		return applicantService.deleteApplicantById(id);
-	}
+  @GetMapping("/history")
+  public String historyPage(Model model) {
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Applicant applicant = userRepository.findByEmail(user.getUsername()).getApplicant();
+    List<Object[]> obj = internshipProfileRepository.getProfilesByApplicantId(applicant.getId());
+    model.addAttribute("profiles", obj.size() > 0 ? obj : null);
+    return "applicant-history";
+  }
+
+  @PutMapping
+  public Applicant updateApplicant(@RequestBody Applicant applicant) {
+    return applicantService.updateApplicant(applicant);
+  }
+
+  @DeleteMapping("/{id}")
+  public long removeApplicant(@PathVariable long id) {
+    return applicantService.deleteApplicantById(id);
+  }
 }

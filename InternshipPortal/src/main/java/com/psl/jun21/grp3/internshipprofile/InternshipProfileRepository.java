@@ -23,7 +23,7 @@ public interface InternshipProfileRepository extends CrudRepository<InternshipPr
 	List<InternshipProfile> getApplicableProfilesByApplicantId(@Param("a_id") long a_id);
 
 	// Applicant applied profile history
-	@Query(value = "SELECT p.title, p.description, p.duration, a.application_status FROM internship_profile p INNER JOIN internship_application a ON p.id = a.internship_profile_id WHERE a.applicant_id=:a_id", nativeQuery = true)
+	@Query(value = "SELECT p.title, p.description, p.duration, a.applied_on ,a.application_status FROM internship_profile p INNER JOIN internship_application a ON p.id = a.internship_profile_id WHERE a.applicant_id=:a_id", nativeQuery = true)
 	List<Object[]> getProfilesByApplicantId(@Param("a_id") long a_id);
 
 }

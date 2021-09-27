@@ -1,56 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Add Profile</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<meta charset="utf-8">
+<title>Applicant Home</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+	crossorigin="anonymous"></script>
 </head>
+<body style="background-color: #e3f2fd;">
+	<nav class="navbar navbar-expand-lg navbar-light"
+		style="background-color: #1eb2a6;">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">Internship Network</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item me-5 mt-1 fs-5">Welcome, <span
+						sec:authentication="principal.username"></span>!
+					</li>
+					<li class="nav-item px-2"><a class="nav-link active"
+						th:href="@{/company/home}">Home</a></li>
+					<li class="nav-item px-2" sec:authorize="isAuthenticated()"><a
+						class="nav-link active" th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-<body>
-    <div class="container my-5">
-        <h3> Add Profile</h3>
-        <div class="card">
-            <div class="card-body">
-                <div class="col-md-10">
-                    <form action="#" th:action="@{/internshipProfile/}" th:object="${internshipProfile}" method="post">
-                        <div class="row">
-                            <div class="form-group col-md-8">
-                                <label for="title" class="col-form-label">Title</label> 
-                                <input type="text" th:field="*{title}" class="form-control" 
-                                            id="title" placeholder="title"  required/>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="domain" class="col-form-label">Domain</label> 
-                                <input type="text" th:field="*{domain}" class="form-control" 
-                                            id="domain" placeholder="domain" required/>
-                            </div>
-                             <div class="form-group col-md-8">
-                                <label for="description" class="col-form-label">Description</label> 
-                                <input type="text" th:field="*{description}" class="form-control" 
-                                            id="description" placeholder="Description" required/>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="duration" class="col-form-label">Duration</label> 
-                                <input type="number" th:field="*{duration}" class="form-control" 
-                                            id="duration" placeholder="Duration"  required/>
-                            </div>
-                  
-                            <div class="col-md-6">
-                                <input type="submit" class="btn btn-primary" value=" Submit ">
-                            </div>
+	<div class="fs-3 mb-3 text-center">Internship Profile</div>
+	<div class="d-flex justify-content-center align-items-center">
+		<div class="row">
+			<form action="#" th:action="@{/internshipProfile}"
+				class="border border-secondary border-3 p-3 rounded-3"
+				th:object="${internshipProfile}" method="post">
+				<div class="row">
+					<div class="form-group">
+						<label for="title" class="col-form-label">Title</label> <input
+							type="text" th:field="*{title}" class="form-control" id="title"
+							placeholder="Title" required />
+					</div>
+					<div class="form-group">
+						<label for="domain" class="col-form-label">Domain</label> <input
+							type="text" th:field="*{domain}" class="form-control" id="domain"
+							placeholder="Domain" required />
+					</div>
+					<div class="form-group">
+						<label for="description" class="col-form-label">Description</label>
+						<input type="text" th:field="*{description}" class="form-control"
+							id="description" placeholder="Description" required />
+					</div>
+					<div class="form-group">
+						<label for="duration" class="col-form-label">Duration
+							(months)</label> <input type="number" th:field="*{duration}"
+							class="form-control" id="duration" placeholder="Duration"
+							required />
+					</div>
 
-                            <input type="hidden" id="id" th:field="*{id}">
-    
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+					<div class="form-group text-center mt-3">
+						<button type="submit" class="btn btn-lg btn-success">Submit</button>
+					</div>
+
+					<input type="hidden" id="id" th:field="*{id}">
+
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 
 </html>

@@ -3,6 +3,7 @@ package com.psl.jun21.grp3.user;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User save(User user) {
-		userRepository.save(user);
-		return null;
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -41,6 +41,19 @@ public class UserServiceImpl implements UserService {
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<UserRole> roles) {
 
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		List<User> list = new ArrayList<User>();
+		for (User user : userRepository.findAll())
+			list.add(user);
+		return list;
+	}
+
+	@Override
+	public void deleteUserById(Long id) {
+		userRepository.deleteById(id);
 	}
 
 }
