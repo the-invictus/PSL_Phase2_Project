@@ -78,8 +78,7 @@ public class CompanyController {
     }
 
     User u = userRepo.findByEmail(username);
-    Company c = comser.getCompanyDetails(u.getId());
-    List<InternshipProfile> list = service.getCompanyInternshipProfiles(c);
+    List<InternshipProfile> list = service.getCompanyInternshipProfiles(u.getCompany());
     model.addAttribute("internshipProfiles", list);
     return "company-home";
   }
@@ -94,8 +93,7 @@ public class CompanyController {
       username = principal.toString();
     }
     User u = userRepo.findByEmail(username);
-    Company c = comser.getCompanyDetails(u.getId());
-    model.addAttribute("company", c);
+    model.addAttribute("company", u.getCompany());
     return "company-profile";
   }
 
