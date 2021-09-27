@@ -20,14 +20,7 @@ import com.psl.jun21.grp3.user.UserService;
 
 @Configuration
 @EnableWebSecurity
-@PropertySource("classpath:config.properties")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-	@Value("${admin_email}")
-	private String adminEmail;
-
-	@Value("${admin_password}")
-	private String adminPassword;
 
 	@Autowired
 	private UserService userService;
@@ -42,12 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		try {
-			userService.save(
-					new User(adminEmail, UserRole.SYSTEM_ADMIN, new BCryptPasswordEncoder().encode(adminPassword)));
-		} catch (Exception ignore) {
-
-		}
 		auth.setUserDetailsService(userService);
 		auth.setPasswordEncoder(passwordEncoder());
 		return auth;

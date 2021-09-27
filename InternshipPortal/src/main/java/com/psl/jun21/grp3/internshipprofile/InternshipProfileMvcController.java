@@ -84,7 +84,9 @@ public class InternshipProfileMvcController {
   @PostMapping()
   public String createOrUpdateInternshipProfile(InternshipProfile internshipProfile) {
     User u = userRepo.findByEmail(getPrincipalUser());
-    internshipProfile.setCompany(u.getCompany());
+    Company c = u.getCompany();
+    c.setUser(u);
+    internshipProfile.setCompany(c);
     service.createOrUpdateInternshipProfile(internshipProfile);
     return "redirect:/company/home";
   }
