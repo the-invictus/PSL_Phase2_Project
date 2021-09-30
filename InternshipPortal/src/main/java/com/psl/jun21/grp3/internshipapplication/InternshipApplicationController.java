@@ -57,7 +57,8 @@ public class InternshipApplicationController {
     if (companyEmail.equals(getPrincipalUser())) {
       application.setApplicationStatus(ApplicationStatus.APPROVED);
       internshipApplicationService.save(application);
-      return String.format("redirect:/internshipProfile/%d/applications", id);
+      return "redirect:/internshipProfile/" + application.getInternshipProfile().getId()
+          + "/applications";
     }
     return "error";
   }
@@ -69,7 +70,8 @@ public class InternshipApplicationController {
     if (companyEmail.equals(getPrincipalUser())) {
       application.setApplicationStatus(ApplicationStatus.REJECTED);
       internshipApplicationService.save(application);
-      return String.format("redirect:/internshipProfile/%d/applications", id);
+      return "redirect:/internshipProfile/" + application.getInternshipProfile().getId()
+          + "/applications";
     }
     return "error";
   }

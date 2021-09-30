@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.psl.jun21.grp3.company.Company;
+import com.psl.jun21.grp3.user.User;
 
 @ExtendWith(MockitoExtension.class)
 class InternshipProfileServiceTest {
@@ -51,14 +52,14 @@ class InternshipProfileServiceTest {
     profile.setDomain("IT");
     profile.setDuration(2);
     profile.setTitle("Title");
-    when(internshipProfileRepository.save(any())).thenReturn(profile);
+    InternshipProfile profileSec = new InternshipProfile();
+    profileSec.setId(2L);
+    when(internshipProfileRepository.findById(2L)).thenReturn(Optional.of(new InternshipProfile()));
+    when(internshipProfileRepository.save(any())).thenReturn(profileSec, profile);
+    assertThat(internshipProfileService.createOrUpdateInternshipProfile(profileSec).getId())
+        .isEqualTo(2L);
     assertThat(internshipProfileService.createOrUpdateInternshipProfile(profile).getDomain())
         .isEqualTo("IT");
-    assertThat(internshipProfileService.createOrUpdateInternshipProfile(profile).getDuration())
-        .isEqualTo(2);
-    assertThat(internshipProfileService.createOrUpdateInternshipProfile(profile).getTitle())
-        .isEqualTo("Title");
-
   }
 
   @Test
@@ -66,6 +67,28 @@ class InternshipProfileServiceTest {
     when(internshipProfileRepository.findById(anyLong()))
         .thenReturn(Optional.of(new InternshipProfile()));
     internshipProfileService.deleteInternshipProfileById(2L);
+  }
+
+  @Test
+  void testGetAllInternshipProfiles() {
+    Iterable<InternshipProfile> iterable = new Iterable<InternshipProfile>() {
+      @Override
+      public Iterator<InternshipProfile> iterator() {
+        List<InternshipProfile> users = new ArrayList<InternshipProfile>(
+            Arrays.asList(new InternshipProfile(), new InternshipProfile()));
+        return users.iterator();
+      }
+    };
+    Iterable<InternshipProfile> iterableSec = new Iterable<InternshipProfile>() {
+      @Override
+      public Iterator<InternshipProfile> iterator() {
+        return (new ArrayList<InternshipProfile>()).iterator();
+      }
+    };
+    when(internshipProfileRepository.findAll()).thenReturn(iterable, iterableSec);
+    assertThat(internshipProfileService.getAllInternshipProfiles().size()).isEqualTo(2);
+    assertThat(internshipProfileService.getAllInternshipProfiles().size()).isEqualTo(0);
+
   }
 
 }

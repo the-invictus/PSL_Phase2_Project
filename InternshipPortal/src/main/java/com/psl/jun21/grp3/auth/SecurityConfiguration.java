@@ -22,43 +22,45 @@ import com.psl.jun21.grp3.user.UserService;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private AuthenticationSuccessHandler authHandler;
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private AuthenticationSuccessHandler authHandler;
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(userService);
-		auth.setPasswordEncoder(passwordEncoder());
-		return auth;
-	}
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+    auth.setUserDetailsService(userService);
+    auth.setPasswordEncoder(passwordEncoder());
+    return auth;
+  }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
-	}
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(authenticationProvider());
+  }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/admin/**").hasAuthority("SYSTEM_ADMIN")
-			.antMatchers("/applicant/registration", "/company/registration", "/", "/h2-console/*")
-			.permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.formLogin().loginPage("/login").successHandler(authHandler).permitAll()
-			.and().logout().invalidateHttpSession(true).clearAuthentication(true)
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
-			.permitAll();
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-	}
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/applicant/registration", "/company/registration", "/", "/h2-console/*")
+        .permitAll()
+        .antMatchers("/admin/**").hasAuthority("SYSTEM_ADMIN")
+        .antMatchers("/company/**").hasAuthority("COMPANY")
+        .antMatchers("/applicant/**").hasAuthority("APPLICANT")
+        .anyRequest().authenticated()
+        .and().formLogin().loginPage("/login").successHandler(authHandler).permitAll()
+        .and()
+        .logout().invalidateHttpSession(true).clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/login?logout").permitAll();
+    http.csrf().disable();
+    http.headers().frameOptions().disable();
+  }
 
 }

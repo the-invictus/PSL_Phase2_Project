@@ -46,11 +46,11 @@ public class Applicant {
 
 	protected String degree;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@PrimaryKeyJoinColumn
 	protected User user;
 
-	@OneToMany(mappedBy = "applicant")
+	@OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
 	List<InternshipApplication> internshipApplications;
 
 }

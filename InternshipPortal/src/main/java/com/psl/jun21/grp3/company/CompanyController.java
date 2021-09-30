@@ -30,13 +30,12 @@ public class CompanyController {
 
   @Autowired
   InternshipProfileService service;
-  @Autowired
-  UserRepository userRepo;
-  @Autowired
-  CompanyService comser;
 
   @Autowired
-  private CompanyService companyService;
+  UserRepository userRepo;
+
+  @Autowired
+  CompanyService companyService;
 
   @ModelAttribute("company")
   public CompanyRegistrationDto userRegistrationDto() {

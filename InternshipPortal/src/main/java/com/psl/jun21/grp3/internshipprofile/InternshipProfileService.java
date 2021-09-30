@@ -16,72 +16,74 @@ import com.psl.jun21.grp3.company.Company;
 @Service
 public class InternshipProfileService {
 
-	@Autowired
-	InternshipProfileRepository repository;
+  @Autowired
+  InternshipProfileRepository repository;
 
-	public List<InternshipProfile> getAllInternshipProfiles() {
-		List<InternshipProfile> result = (List<InternshipProfile>) repository.findAll();
+  public List<InternshipProfile> getAllInternshipProfiles() {
 
-		if (result.size() > 0) {
-			return result;
-		} else {
-			return new ArrayList<InternshipProfile>();
-		}
-	}
+    List<InternshipProfile> result = new ArrayList<InternshipProfile>();
+    for (InternshipProfile profile : repository.findAll())
+      result.add(profile);
+    if (result.size() > 0) {
+      return result;
+    } else {
+      return new ArrayList<InternshipProfile>();
+    }
+  }
 
-	public List<InternshipProfile> getCompanyInternshipProfiles(Company c) {
-		List<InternshipProfile> result = (List<InternshipProfile>) repository.findByCompany(c);
+  public List<InternshipProfile> getCompanyInternshipProfiles(Company c) {
+    List<InternshipProfile> result = (List<InternshipProfile>) repository.findByCompany(c);
 
-		if (result.size() > 0) {
-			return result;
-		} else {
-			return new ArrayList<InternshipProfile>();
-		}
-	}
+    if (result.size() > 0) {
+      return result;
+    } else {
+      return new ArrayList<InternshipProfile>();
+    }
+  }
 
-	public InternshipProfile getInternshipProfileById(Long id) throws RecordNotFoundException {
-		Optional<InternshipProfile> internshipProfile = repository.findById(id);
+  public InternshipProfile getInternshipProfileById(Long id) throws RecordNotFoundException {
+    Optional<InternshipProfile> internshipProfile = repository.findById(id);
 
-		if (internshipProfile.isPresent()) {
-			return internshipProfile.get();
-		} else {
-			throw new RecordNotFoundException("No internshipProfile record exist for given id");
-		}
-	}
+    if (internshipProfile.isPresent()) {
+      return internshipProfile.get();
+    } else {
+      throw new RecordNotFoundException("No internshipProfile record exist for given id");
+    }
+  }
 
-	public InternshipProfile createOrUpdateInternshipProfile(InternshipProfile entity) {
-		if (entity.getId() == null) {
-			entity = repository.save(entity);
+  public InternshipProfile createOrUpdateInternshipProfile(InternshipProfile entity) {
+    if (entity.getId() == null) {
+      entity = repository.save(entity);
 
-			return entity;
-		} else {
-			Optional<InternshipProfile> internshipProfile = repository.findById(entity.getId());
+      return entity;
+    } else {
+      Optional<InternshipProfile> internshipProfile = repository.findById(entity.getId());
 
-			if (internshipProfile.isPresent()) {
-				InternshipProfile newEntity = internshipProfile.get();
+      if (internshipProfile.isPresent()) {
+        InternshipProfile newEntity = internshipProfile.get();
 
-				newEntity.setTitle(entity.getTitle());
-				newEntity.setDuration(entity.getDuration());
-				newEntity.setDescription(entity.getDescription());
-				newEntity.setDomain(entity.getDomain());
-				newEntity = repository.save(newEntity);
+        newEntity.setTitle(entity.getTitle());
+        newEntity.setDuration(entity.getDuration());
+        newEntity.setDescription(entity.getDescription());
+        newEntity.setDomain(entity.getDomain());
+        newEntity = repository.save(newEntity);
 
-				return newEntity;
-			} else {
-				entity = repository.save(entity);
+        return newEntity;
+      } else {
+        entity = repository.save(entity);
 
-				return entity;
-			}
-		}
-	}
+        return entity;
+      }
+    }
+  }
 
-	public void deleteInternshipProfileById(Long id) throws RecordNotFoundException {
-		Optional<InternshipProfile> internshipProfile = repository.findById(id);
+  public void deleteInternshipProfileById(Long id) throws RecordNotFoundException {
+    Optional<InternshipProfile> internshipProfile = repository.findById(id);
 
-		if (internshipProfile.isPresent()) {
-			repository.deleteById(id);
-		} else {
-			throw new RecordNotFoundException("No internshipProfile record exist for given id");
-		}
-	}
+    if (internshipProfile.isPresent()) {
+      repository.deleteById(id);
+    } else {
+      throw new RecordNotFoundException("No internshipProfile record exist for given id");
+    }
+  }
 }

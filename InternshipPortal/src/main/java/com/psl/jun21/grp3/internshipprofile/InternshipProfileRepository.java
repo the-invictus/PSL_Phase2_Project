@@ -19,7 +19,7 @@ public interface InternshipProfileRepository extends CrudRepository<InternshipPr
 
 	// Applicant can not apply for past profiles where status is pending 0 or
 	// approved 1
-	@Query(value = "SELECT * FROM internship_profile i WHERE i.id NOT IN(SELECT a.internship_app_id FROM internship_application a WHERE a.applicant_id=:a_id AND a.application_status IN (0,1))", nativeQuery = true)
+	@Query(value = "SELECT * FROM internship_profile i WHERE i.id NOT IN(SELECT a.internship_profile_id FROM internship_application a WHERE a.applicant_id=:a_id AND a.application_status IN (0,1))", nativeQuery = true)
 	List<InternshipProfile> getApplicableProfilesByApplicantId(@Param("a_id") long a_id);
 
 	// Applicant applied profile history

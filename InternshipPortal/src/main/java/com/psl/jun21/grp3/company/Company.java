@@ -43,11 +43,11 @@ public class Company {
   @Max(value = 9999999999L)
   protected long contactNo;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne
   @PrimaryKeyJoinColumn
   protected User user;
 
-  @OneToMany(mappedBy = "company")
+  @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
   List<InternshipProfile> internshipProfiles;
 
   public Company(String companyName, String domain,
